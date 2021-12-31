@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
             break;
 
           case 'minlen':
-            if ((i.val().length < parseInt(exp)) || (i.val().length > parseInt(exp))) {
+            if (i.val().length < parseInt(exp)) {
               ferror = ierror = true;
             }
             break;
