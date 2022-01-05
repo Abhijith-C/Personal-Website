@@ -5,7 +5,9 @@ jQuery(document).ready(function($) {
   $('form.contactForm').submit(function() {
     var f = $(this).find('.form-group'),
       ferror = false,
+      ferror1 = false,
       emailExp = /^[^\s()<>@,;:\/]+@\w[\w\.-]+\.[a-z]{2,}$/i;
+      var pattern =  /[a-zA-Z]+$/;
 
     f.children('input').each(function() { // run all inputs
 
@@ -30,10 +32,19 @@ jQuery(document).ready(function($) {
             break;
 
           case 'minlen':
-            if (i.val().length < parseInt(exp)) {
+            if ((i.val().length < parseInt(exp)) || (i.val().length > parseInt(exp))) {
               ferror = ierror = true;
             }
             break;
+            case 'minlength':
+              if (i.val().length < parseInt(exp)) {
+                ferror = ierror = true;
+              }
+              if(!pattern.test(i.val())){
+              alert("Pleae type charactor only");
+              ferror1 = true;
+              }
+              break;
 
           case 'email':
             if (!emailExp.test(i.val())) {
@@ -88,7 +99,7 @@ jQuery(document).ready(function($) {
         i.next('.validation').html((ierror ? (i.attr('data-msg') != undefined ? i.attr('data-msg') : 'wrong Input') : '')).show('blind');
       }
     });
-    if (ferror) return false;
+    if (ferror || ferror1) return false;
     else var str = $(this).serialize();
     var action = $(this).attr('action');
     if( ! action ) {
